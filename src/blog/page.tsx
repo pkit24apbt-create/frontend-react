@@ -17,8 +17,7 @@ export const Blog = () => {
         const fetchPosts = async () => {
             try{
             const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-            const result = await response.json();
-            const data: Post[] = result.data;
+            const data: Post[] = await response.json();
             
             setPosts(data);
 
@@ -31,20 +30,42 @@ export const Blog = () => {
         }, []);
        
     return(
-            <div>
+                <div style={{ fontFamily: "Arial, sans-serif", lineHeight: "1.6", color: "#333" }}>
                 <Header/>
+                <section style={{ padding: "40px 20px", textAlign: "center", backgroundColor: "#f5f5f5" }}>
+        <h1 style={{ fontSize: "2.5rem", marginBottom: "10px" }}>Blog</h1>
+        <p>Read the latest posts and updates!</p>
+      </section>
 
-                <div>Blog
-                    {posts.map((post, index) =>{
-                     return(
-                        <div key={index}>
-                         <h2>{post.title}</h2>  
-                         <p>{post.body}</p> 
-                         <p> {post.userId}</p>
-                         </div>
-                     )   
-                    })}
-                </div>
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: "20px",
+          padding: "40px 20px",
+        }}
+      >
+        {posts.map((post) => (
+          <div
+            key={post.id}
+            style={{
+              border: "1px solid #ccc",
+              borderRadius: "10px",
+              padding: "20px",
+              backgroundColor: "#fff",
+              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+              transition: "transform 0.2s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.03)")}
+            onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          >
+            <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>{post.title}</h2>
+            <p style={{ marginBottom: "10px", color: "#555" }}>{post.body}</p>
+            <p style={{ fontSize: "0.9rem", color: "#999" }}>User ID: {post.userId}</p>
+          </div>
+        ))}
+      </section>
+
                 <Footer/>
                 </div>
     );
