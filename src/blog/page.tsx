@@ -1,3 +1,4 @@
+const apiUrl = import.meta.env.VITE_BACKEND_URL;
 import { Header } from "../components/Header"
 import { Footer } from "../components/Footer";
 import { useEffect, useState } from "react";
@@ -16,9 +17,10 @@ export const Blog = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try{
-            const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+            // const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+            const response = await fetch(`${apiUrl}/api/posts`);
             const data: Post[] = await response.json();
-            
+          
             setPosts(data);
 
         }
